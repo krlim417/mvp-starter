@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
+// import List from './components/List.jsx';
+// import config from '../config.js';
+import Search from './components/Search.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      items: []
+      query: '',
+      type: ''
     }
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
     $.ajax({
-      url: '/items', 
+      url: '/', 
       success: (data) => {
         this.setState({
           items: data
@@ -25,10 +29,25 @@ class App extends React.Component {
     });
   }
 
+  // send(url) {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/",
+
+  //   })
+  // }
+
+  search(searchValue, searchType) {
+    this.setState({
+      query: searchValue,
+      type: searchType
+    });
+  }
+
   render () {
     return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
+      <h1>Guideify</h1>
+      <Search searchFunc={this.search} />
     </div>)
   }
 }
