@@ -2,27 +2,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
+import TopFiveLiked from './components/TopFiveLiked.jsx';
 import RecommendationList from './components/RecommendationList.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
+      topFiveLiked: [],
       recommendations: []
     }
     this.search = this.search.bind(this);
+    this.fetchTopFive = this.fetchTopFive.bind(this);
   }
 
   componentDidMount() {
+    this.fetchTopFive();
+  }
+
+  fetchTopFive() {
     $.ajax({
       type: 'GET',
       url: '/fetch',
       success: (data) => {
-        console.log('GET request is successful.');
+        console.log('GET request was successful.');
       },
       error: (err) => {
-        console.log('GET request is unsuccessful.');
+        console.log('GET request was unsuccessful.');
       }
+    }).then(data => {
+      this.setState({
+        topFiveLiked: data
+      })
     });
   }
 
@@ -34,10 +45,10 @@ class App extends React.Component {
         valueToFetch: value
       },
       success: (data) => {
-        console.log('POST request is successful.');
+        console.log('POST request was successful.');
       },
       error: (err) => {
-        console.log('POST request is unsuccessful.');
+        console.log('POST request was unsuccessful.');
       }
     }).then(data => {
       this.setState({
@@ -51,6 +62,7 @@ class App extends React.Component {
     return (<div>
       <h1>Guideify</h1>
       <Search searchFunc={this.search} />
+      <TopFiveLiked top={this.state.topFiveLiked} />
       <RecommendationList recommendations={this.state.recommendations} />
     </div>)
   }

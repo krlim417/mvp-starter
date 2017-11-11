@@ -57,10 +57,14 @@ app.post('/search', function (req, res) {
 
 app.get('/fetch', function(req, res) {
   db.selectTopFiveLiked(function(err, items) {
+    var output = [];
     if (err) {
       console.log('Server failed to fetch from database.');
     }
-    res.status(200).send(items);
+    items.forEach(item => {
+      output.push(item.name);
+    });
+    res.status(200).send(output);
   });
 });
 
