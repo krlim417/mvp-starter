@@ -9,14 +9,10 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 // request.get()
 
-app.get('/', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+app.get('/search', function (req, res) {
+  // console.log('REQUEST: ', req);
+  console.log('HELLO?!');
+  res.send('got yer request');
 });
 
 app.listen(3000, function() {

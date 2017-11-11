@@ -14,33 +14,39 @@ class App extends React.Component {
     this.search = this.search.bind(this);
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: '/search',
+  //     data: this.
+  //     success: (data) => {
+  //       console.log('GET request is SUCCESSFUL.');
+  //     },
+  //     error: (err) => {
+  //       console.log('GET request is unsuccessful.');
+  //     }
+  //   });
+  // }
+
+  get(value) {
+    console.log(value);
     $.ajax({
-      url: '/', 
+      url: "/search",
+      data: value,
       success: (data) => {
-        this.setState({
-          items: data
-        })
+        console.log('GET request is SUCCESSFUL.');
+        console.log('GET DATA BACK: ', data);
       },
       error: (err) => {
-        console.log('err', err);
+        console.log('GET request is unsuccessful.');
       }
     });
   }
-
-  // send(url) {
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "/",
-
-  //   })
-  // }
 
   search(searchValue) {
     this.setState({
       query: searchValue
     }, () => {
-      console.log('HELLO', this.state.query)
+      this.get(this.state.searchValue);
     });
   }
 
