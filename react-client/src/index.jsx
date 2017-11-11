@@ -35,18 +35,17 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log('POST request is successful.');
-        console.log('POST DATA: ', data);
       },
       error: (err) => {
         console.log('POST request is unsuccessful.');
       }
     }).then(data => {
-      console.log('THIS STATE: ', this.state.recommendations);
       this.setState({
         recommendations: data
       });
     });
   }
+
 
   render () {
     return (<div>
