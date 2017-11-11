@@ -23,13 +23,14 @@ var save = function(data) {
   var recommendations = parsedData.Similar.Results;
   var schemaOutline = {
     name: parsedData.Similar.Info[0].Name,
+    likes: 0,
     similar: []
   };
 
   recommendations.forEach(item => {
     schemaOutline.similar.push(item.Name);
   });
-  
+
   var newData = new Show(schemaOutline);
 
   newData.save(function(err, newData) {
@@ -40,15 +41,14 @@ var save = function(data) {
   });
 };
 
-var selectAll = function(callback) {
-  Show.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
+var selectTopFiveLiked = function(callback) {
+  Show.find({}).sort({'likes': -1}).limit(5).exec(function(err, data) {
+    if (err) {
+      console.log('Did not find anything in database.');
     }
+    callback(null, data);
   });
 };
 
-module.exports.selectAll = selectAll;
+module.exports.selectTopFiveLiked = selectTopFiveLiked;
 module.exports.save = save;

@@ -29,7 +29,6 @@ var joinedParameters = function(option) {
 };
 
 app.post('/search', function (req, res) {
-  var a;
   options.q = req.body.valueToFetch;
   request(joinedParameters(options), (err, response, body) => {
     if (err) {
@@ -38,7 +37,16 @@ app.post('/search', function (req, res) {
     db.save(body);
     console.log('API call was successful.');
   });
-  res.status(200).send(dataB);
+  res.status(200).send('Post request received.');
+});
+
+app.get('/fetch', function(req, res) {
+  db.selectTopFiveLiked(function(err, items) {
+    if (err) {
+      console.log('Server failed to fetch from database.');
+    }
+    res.status(200).send(items);
+  });
 });
 
 app.listen(3000, function() {

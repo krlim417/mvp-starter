@@ -14,18 +14,19 @@ class App extends React.Component {
     this.search = this.search.bind(this);
   }
 
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: '/search',
-  //     data: this.
-  //     success: (data) => {
-  //       console.log('GET request is SUCCESSFUL.');
-  //     },
-  //     error: (err) => {
-  //       console.log('GET request is unsuccessful.');
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    $.ajax({
+      type: 'GET',
+      url: '/fetch',
+      success: (data) => {
+        console.log('GET request is successful.');
+        console.log('GET request fetched data: ', data);
+      },
+      error: (err) => {
+        console.log('GET request is unsuccessful.');
+      }
+    });
+  }
 
   search(value) {
     $.ajax({
@@ -35,11 +36,11 @@ class App extends React.Component {
         valueToFetch: value
       },
       success: (data) => {
-        console.log('GET request is SUCCESSFUL.');
-        console.log('GET DATA BACK: ', data);
+        console.log('POST request is successful.');
+        console.log('POST request fetched data: ', data);
       },
       error: (err) => {
-        console.log('GET request is unsuccessful.');
+        console.log('POST request is unsuccessful.');
       }
     });
   }
