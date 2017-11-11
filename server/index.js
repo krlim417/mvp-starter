@@ -30,7 +30,10 @@ var joinedParameters = function(option) {
 app.post('/search', function (req, res) {
   options.q = req.body.valueToFetch;
   request(joinedParameters(options), (err, data) => {
-    console.log('API CALL: ', data);
+    if (err) {
+      console.log('API call was unsuccessful.');
+    }
+    console.log('API call was successful.');
   });
   res.status(200).send(options.q);
 });
