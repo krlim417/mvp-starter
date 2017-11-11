@@ -9,8 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      query: '',
-      type: ''
+      query: ''
     }
     this.search = this.search.bind(this);
   }
@@ -37,10 +36,11 @@ class App extends React.Component {
   //   })
   // }
 
-  search(searchValue, searchType) {
+  search(searchValue) {
     this.setState({
-      query: searchValue,
-      type: searchType
+      query: searchValue
+    }, () => {
+      console.log('HELLO', this.state.query)
     });
   }
 
