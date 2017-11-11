@@ -18,7 +18,7 @@ var showSchema = mongoose.Schema({
 
 var Show = mongoose.model('Show', showSchema);
 
-var save = function(data) {
+var save = function(data, callback) {
   var parsedData = JSON.parse(data);
   var recommendations = parsedData.Similar.Results;
   var schemaOutline = {
@@ -38,6 +38,7 @@ var save = function(data) {
       console.log('Did not save to database.');
     }
     console.log('Saved to database');
+    callback(newData);
   });
 };
 

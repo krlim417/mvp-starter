@@ -34,10 +34,11 @@ app.post('/search', function (req, res) {
     if (err) {
       console.log('API call was unsuccessful.');
     }
-    db.save(body);
     console.log('API call was successful.');
+    db.save(body, function(data) {
+      res.status(200).send(data);  
+    });
   });
-  res.status(200).send('Post request received.');
 });
 
 app.get('/fetch', function(req, res) {
