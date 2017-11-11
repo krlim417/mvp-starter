@@ -51,5 +51,15 @@ var selectTopFiveLiked = function(callback) {
   });
 };
 
-module.exports.selectTopFiveLiked = selectTopFiveLiked;
+var selectAll = function(callback) {
+  Show.find({}, function(err, data) {
+    if (err) {
+      console.log('Did not find anything in database.');
+    }
+    callback(null, data);
+  });
+};
+
 module.exports.save = save;
+module.exports.selectTopFiveLiked = selectTopFiveLiked;
+module.exports.selectAll = selectAll;
