@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      query: ''
+      recommendations: []
     }
     this.search = this.search.bind(this);
   }
@@ -27,11 +27,13 @@ class App extends React.Component {
   //   });
   // }
 
-  get(value) {
-    console.log(value);
+  search(value) {
     $.ajax({
-      url: "/search",
-      data: value,
+      type: 'POST',
+      url: '/search',
+      data: {
+        valueToFetch: value
+      },
       success: (data) => {
         console.log('GET request is SUCCESSFUL.');
         console.log('GET DATA BACK: ', data);
@@ -39,14 +41,6 @@ class App extends React.Component {
       error: (err) => {
         console.log('GET request is unsuccessful.');
       }
-    });
-  }
-
-  search(searchValue) {
-    this.setState({
-      query: searchValue
-    }, () => {
-      this.get(this.state.searchValue);
     });
   }
 

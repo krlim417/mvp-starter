@@ -6,13 +6,15 @@ var items = require('../database-mongo');
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 // request.get()
 
-app.get('/search', function (req, res) {
-  // console.log('REQUEST: ', req);
-  console.log('HELLO?!');
-  res.send('got yer request');
+app.post('/search', function (req, res) {
+  var searchValue = req.body.valueToFetch;
+  
+  res.status(200).send(searchValue);
 });
 
 app.listen(3000, function() {
