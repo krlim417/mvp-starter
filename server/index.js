@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var items = require('../database-mongo');
 var request = require('request');
 var config = require('../config');
+var db = require('../database-mongo/index');
 
 var app = express();
 
@@ -28,14 +29,16 @@ var joinedParameters = function(option) {
 };
 
 app.post('/search', function (req, res) {
+  var a;
   options.q = req.body.valueToFetch;
-  request(joinedParameters(options), (err, data) => {
+  request(joinedParameters(options), (err, response, body) => {
     if (err) {
       console.log('API call was unsuccessful.');
     }
+    db.save(body);
     console.log('API call was successful.');
   });
-  res.status(200).send(options.q);
+  res.status(200).send(dataB);
 });
 
 app.listen(3000, function() {

@@ -11,15 +11,37 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var showSchema = mongoose.Schema({
+  name: {type: String, index: {unique: true}},
+  similar: [{type: String}]
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Show = mongoose.model('Show', showSchema);
+
+var save = function(data) {
+  var parsedData = JSON.parse(data);
+  var recommendations = parsedData.Similar.Results;
+  var schemaOutline = {
+    name: parsedData.Similar.Info[0].Name,
+    similar: []
+  };
+
+  recommendations.forEach(item => {
+    schemaOutline.similar.push(item.Name);
+  });
+  
+  var newData = new Show(schemaOutline);
+
+  newData.save(function(err, newData) {
+    if (err) {
+      console.log('Did not save to database.');
+    }
+    console.log('Saved to database');
+  });
+};
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+  Show.find({}, function(err, items) {
     if(err) {
       callback(err, null);
     } else {
@@ -29,3 +51,4 @@ var selectAll = function(callback) {
 };
 
 module.exports.selectAll = selectAll;
+module.exports.save = save;
