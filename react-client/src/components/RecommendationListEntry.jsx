@@ -1,11 +1,30 @@
 import React from 'react';
 
 const RecommendationListEntry = (props) => (
-  <div className={props.item.split(' ').join('')}>
-    {props.item}
-    <form>
-      <input type='button' value='like' className={props.item.split(' ').join('') + '-button'} />
-    </form>
+  <div>
+  {console.log('ENTRIES', props.items)}
+    <table>
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Likes</th>
+          <th></th>
+        </tr>
+        {props.items.map(item => {
+          return (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.likes}</td>
+              <td>
+                <form>
+                  <input type='button' value='like' />
+                </form>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   </div>
 );
 

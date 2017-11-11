@@ -47,7 +47,6 @@ app.post('/search', function (req, res) {
         }
         console.log('API call was successful.');
         db.save(body, function(data) {
-          console.log('DATA IN POST REQUEST SERVER: ', data.similar);
           res.status(200).send(data.similar);  
         });
       });
