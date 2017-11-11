@@ -30,14 +30,27 @@ var joinedParameters = function(option) {
 
 app.post('/search', function (req, res) {
   options.q = req.body.valueToFetch;
-  request(joinedParameters(options), (err, response, body) => {
-    if (err) {
-      console.log('API call was unsuccessful.');
+  db.selectAll(function(err, result) {
+    var output;
+    for (var i = 0; i < result.length; i++) {
+      if (result[i].name.toLowerCase() === options.q.toLowerCase()) {
+        output = result[i].similar;
+        break;
+      }
     }
-    console.log('API call was successful.');
-    db.save(body, function(data) {
-      res.status(200).send(data);  
-    });
+    if (output) {
+      res.status(200).send(output);
+    } else {
+      request(joinedParameters(options), (err, response, body) => {
+        if (err) {
+          console.log('API call was unsuccessful.');
+        }
+        console.log('API call was successful.');
+        db.save(body, function(data) {
+          res.status(200).send(data);  
+        });
+      });
+    };
   });
 });
 

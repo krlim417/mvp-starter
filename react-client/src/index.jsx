@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import List from './components/List.jsx';
-// import config from '../config.js';
 import Search from './components/Search.jsx';
+import RecommendationList from './components/RecommendationList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +19,6 @@ class App extends React.Component {
       url: '/fetch',
       success: (data) => {
         console.log('GET request is successful.');
-        console.log('GET request fetched data: ', data);
       },
       error: (err) => {
         console.log('GET request is unsuccessful.');
@@ -37,11 +35,16 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log('POST request is successful.');
-        console.log('POST request fetched data: ', data);
+        console.log('POST DATA: ', data);
       },
       error: (err) => {
         console.log('POST request is unsuccessful.');
       }
+    }).then(data => {
+      console.log('THIS STATE: ', this.state.recommendations);
+      this.setState({
+        recommendations: data
+      });
     });
   }
 
@@ -49,6 +52,7 @@ class App extends React.Component {
     return (<div>
       <h1>Guideify</h1>
       <Search searchFunc={this.search} />
+      <RecommendationList recommendations={this.state.recommendations} />
     </div>)
   }
 }
