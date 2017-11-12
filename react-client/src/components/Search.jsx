@@ -20,7 +20,9 @@ class Search extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    this.props.searchFunc(this.state.searchValue);
+    if (this.state.searchValue) {
+      this.props.searchFunc(this.state.searchValue);
+    }
   }
 
   render() {
