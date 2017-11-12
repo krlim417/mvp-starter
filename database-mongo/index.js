@@ -14,7 +14,12 @@ db.once('open', function() {
 var showSchema = mongoose.Schema({
   name: {type: String, index: {unique: true}},
   timesSearched: Number,
-  similar: [{name: String}]
+  similar: [{
+    name: String,
+    description: String,
+    wiki: String,
+    youtubeId: String
+  }]
 });
 
 var Show = mongoose.model('Show', showSchema);
@@ -28,10 +33,17 @@ var save = function(parsedData, callback) {
   };
 
   recommendations.forEach(item => {
-    schemaOutline.similar.push({name: item.Name});
+    console.log(item.yID);
+    schemaOutline.similar.push({
+      name: item.Name,
+      description: item.wTeaser,
+      wiki: item.wUrl,
+      youtubeId: item.yID
+    });
   });
 
   var newData = new Show(schemaOutline);
+  console.log('YOUTUBE ID', schemaOutline);
 
   newData.save(function(err, newData) {
     if (err) {
