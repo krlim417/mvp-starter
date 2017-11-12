@@ -13,8 +13,8 @@ db.once('open', function() {
 
 var showSchema = mongoose.Schema({
   name: {type: String, index: {unique: true}},
-  likes: Number,
-  similar: [{name: String, likes: Number}]
+  timesSearched: Number,
+  similar: [{name: String}]
 });
 
 var Show = mongoose.model('Show', showSchema);
@@ -23,12 +23,12 @@ var save = function(parsedData, callback) {
   var recommendations = parsedData.Similar.Results;
   var schemaOutline = {
     name: parsedData.Similar.Info[0].Name,
-    likes: 0,
+    timesSearched: 1,
     similar: []
   };
 
   recommendations.forEach(item => {
-    schemaOutline.similar.push({name: item.Name, likes: 0});
+    schemaOutline.similar.push({name: item.Name});
   });
 
   var newData = new Show(schemaOutline);
@@ -43,7 +43,7 @@ var save = function(parsedData, callback) {
 };
 
 var selectTopFiveLiked = function(callback) {
-  Show.find({}).sort({'likes': -1}).limit(5).exec(function(err, data) {
+  Show.find({}).sort({'timesSearched': -1}).limit(5).exec(function(err, data) {
     if (err) {
       console.log('Did not find anything in database.');
     }
@@ -60,6 +60,17 @@ var selectAll = function(callback) {
   });
 };
 
+var updateSearchCount = function(name, callback) {
+  Show.findOneAndUpdate(name, {$inc: {timesSearched: 1}}).exec(function(err, data) {
+    if (err) {
+      console.log('Did not increment times searched.');
+    }
+    console.log('DATAAAA', data);
+    callback(data);
+  });
+}
+
 module.exports.save = save;
 module.exports.selectTopFiveLiked = selectTopFiveLiked;
 module.exports.selectAll = selectAll;
+module.exports.updateSearchCount = updateSearchCount;

@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var options = {
   q: '',
   type: 'shows',
+  info: 1,
   k: config.API_KEY
 };
 
@@ -35,6 +36,12 @@ app.post('/search', function (req, res) {
     for (var i = 0; i < result.length; i++) {
       if (result[i].name.toLowerCase() === options.q.toLowerCase()) {
         output = result[i].similar;
+        db.updateSearchCount(options.q, function(err, result) {
+          if (err) {
+            console.log('Update times searched did not work');
+          }
+          output.push(result);
+        });
         break;
       }
     }
@@ -47,7 +54,7 @@ app.post('/search', function (req, res) {
         }
         console.log('API call was successful.');
         var parsedBody = JSON.parse(body);
-        if (parsedBody.Similar.Info[0].Type !== "unknown") {
+        if (parsedBody.Similar.Info[0].Type === "show") {
           db.save(parsedBody, function(data) {
             res.status(200).send(data.similar);
           });
