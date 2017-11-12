@@ -54,6 +54,8 @@ class App extends React.Component {
       this.setState({
         recommendations: data
       });
+    }).then(() => {
+      this.fetchTopFive();
     });
   }
 
