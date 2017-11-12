@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
-import TopFiveLiked from './components/TopFiveLiked.jsx';
+import TopFiveLiked from './components/TopFiveSearched.jsx';
 import RecommendationList from './components/RecommendationList.jsx';
 
 class App extends React.Component {
