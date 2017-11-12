@@ -64,7 +64,7 @@ class App extends React.Component {
       <h1>Guideify</h1>
       <Search searchFunc={this.search} /><br/>
       <TopFiveLiked top={this.state.topFiveLiked} />
-      <RecommendationList recommendations={this.state.recommendations} likePostFunc={this.likePost} />
+      <RecommendationList recommendations={this.state.recommendations} />
     </div>)
   }
 }

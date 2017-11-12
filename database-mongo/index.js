@@ -73,6 +73,7 @@ var selectAll = function(callback) {
 };
 
 var updateSearchCount = function(name, callback) {
+  console.log('NAME IN SEARCH', name);
   Show.findOneAndUpdate(name, {$inc: {timesSearched: 1}}).exec(function(err, data) {
     if (err) {
       console.log('Did not increment times searched.');
@@ -81,19 +82,7 @@ var updateSearchCount = function(name, callback) {
   });
 }
 
-
-var updateShowImage = function(name, callback) {
-  Show.findOneAndUpdate(name, {timesSearched: 1}).exec(function(err, data) {
-    if (err) {
-      console.log('Did not update tv show image.');
-    }
-    console.log('DATAAAA', data);
-    callback(data);
-  });
-}
-
 module.exports.save = save;
 module.exports.selectTopFiveLiked = selectTopFiveLiked;
 module.exports.selectAll = selectAll;
 module.exports.updateSearchCount = updateSearchCount;
-module.exports.updateShowImage = updateShowImage;
