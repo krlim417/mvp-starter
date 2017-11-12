@@ -13,6 +13,7 @@ db.once('open', function() {
 
 var showSchema = mongoose.Schema({
   name: {type: String, index: {unique: true}},
+  image: String,
   timesSearched: Number,
   similar: [{
     name: String,
@@ -24,16 +25,16 @@ var showSchema = mongoose.Schema({
 
 var Show = mongoose.model('Show', showSchema);
 
-var save = function(parsedData, callback) {
-  var recommendations = parsedData.Similar.Results;
+var save = function(parsedRecommendationData, parsedShowInfoData, callback) {
+  var recommendations = parsedRecommendationData.Similar.Results;
   var schemaOutline = {
-    name: parsedData.Similar.Info[0].Name,
+    name: parsedRecommendationData.Similar.Info[0].Name,
+    image: parsedShowInfoData.show.image.medium,
     timesSearched: 1,
     similar: []
   };
 
   recommendations.forEach(item => {
-    console.log(item.yID);
     schemaOutline.similar.push({
       name: item.Name,
       description: item.wTeaser,
@@ -43,7 +44,6 @@ var save = function(parsedData, callback) {
   });
 
   var newData = new Show(schemaOutline);
-  console.log('YOUTUBE ID', schemaOutline);
 
   newData.save(function(err, newData) {
     if (err) {
@@ -77,6 +77,16 @@ var updateSearchCount = function(name, callback) {
     if (err) {
       console.log('Did not increment times searched.');
     }
+    callback(data);
+  });
+}
+
+
+var updateShowImage = function(name, callback) {
+  Show.findOneAndUpdate(name, {timesSearched: 1}).exec(function(err, data) {
+    if (err) {
+      console.log('Did not update tv show image.');
+    }
     console.log('DATAAAA', data);
     callback(data);
   });
@@ -86,3 +96,4 @@ module.exports.save = save;
 module.exports.selectTopFiveLiked = selectTopFiveLiked;
 module.exports.selectAll = selectAll;
 module.exports.updateSearchCount = updateSearchCount;
+module.exports.updateShowImage = updateShowImage;

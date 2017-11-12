@@ -18,7 +18,11 @@ var options = {
   k: config.API_KEY
 };
 
-var joinedParameters = function(option) {
+var imageOptions = {
+  q: ''
+}
+
+var joinedRecommendationParameters = function(option) {
   var joinedParams = 'https://tastedive.com/api/similar?';
   for (var key in options) {
     joinedParams += `${key}=${options[key]}`;
@@ -29,8 +33,13 @@ var joinedParameters = function(option) {
   return joinedParams;
 };
 
+var joinedImageParameters = function(option) {
+  return `http://api.tvmaze.com/search/shows?q=${option.q}`
+}
+
 app.post('/search', function (req, res) {
   options.q = req.body.valueToFetch;
+  imageOptions.q = req.body.valueToFetch;
   db.selectAll(function(err, result) {
     var output;
     for (var i = 0; i < result.length; i++) {
@@ -48,15 +57,22 @@ app.post('/search', function (req, res) {
     if (output) {
       res.status(200).send(output);
     } else {
-      request(joinedParameters(options), (err, response, body) => {
+      request(joinedRecommendationParameters(options), (err, response, body) => {
         if (err) {
-          console.log('API call was unsuccessful.');
+          console.log('API call to get recommendations was unsuccessful.');
         }
-        console.log('API call was successful.');
-        var parsedBody = JSON.parse(body);
-        if (parsedBody.Similar.Info[0].Type === "show") {
-          db.save(parsedBody, function(data) {
-            res.status(200).send(data.similar);
+        console.log('API call to get recommendations was successful.');
+        var parsedRecommendationBody = JSON.parse(body);
+        if (parsedRecommendationBody.Similar.Info[0].Type === "show") {
+          request(joinedImageParameters(imageOptions), (err, response, body) => {
+            if (err) {
+              console.log('API call to fetch show information unsuccessful.');
+            }
+            console.log('API call to fetch show information was successful');
+            var parsedShowInfoBody = JSON.parse(body)[0];
+            db.save(parsedRecommendationBody, parsedShowInfoBody, function(data) {
+              res.status(200).send(data.similar);
+            });
           });
         } else {
           res.status(404).send();

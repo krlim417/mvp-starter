@@ -16,7 +16,7 @@ const TopFiveLiked = (props) => (
                     <td>{item.timesSearched}</td>
                   </tr>
                   <tr>
-                    <td colSpan="2">image here</td>
+                    <td colSpan="2"><img src={item.image}/></td>
                   </tr>
                 </tbody>
               </table>

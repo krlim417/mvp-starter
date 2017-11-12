@@ -8,7 +8,6 @@ class RecommendationListEntry extends React.Component {
   }
 
   render() {
-    {console.log(this.props.items)}
     return (
       <div>
         <table>
