@@ -46,9 +46,14 @@ app.post('/search', function (req, res) {
           console.log('API call was unsuccessful.');
         }
         console.log('API call was successful.');
-        db.save(body, function(data) {
-          res.status(200).send(data.similar);
-        });
+        var parsedBody = JSON.parse(body);
+        if (parsedBody.Similar.Info[0].Type !== "unknown") {
+          db.save(parsedBody, function(data) {
+            res.status(200).send(data.similar);
+          });
+        } else {
+          res.status(404).send();
+        }
       });
     };
   });
@@ -64,7 +69,7 @@ app.get('/fetch', function(req, res) {
   });
 });
 
+
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
-

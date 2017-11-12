@@ -12,8 +12,8 @@ class App extends React.Component {
       topFiveLiked: [],
       recommendations: []
     }
-    this.search = this.search.bind(this);
     this.fetchTopFive = this.fetchTopFive.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +47,7 @@ class App extends React.Component {
       success: (data) => {
         console.log('POST request was successful.');
       },
-      error: (err) => {
+      error: () => {
         console.log('POST request was unsuccessful.');
       }
     }).then(data => {
@@ -59,13 +59,12 @@ class App extends React.Component {
     });
   }
 
-
   render () {
     return (<div>
       <h1>Guideify</h1>
-      <Search searchFunc={this.search} />
+      <Search searchFunc={this.search} /><br/>
       <TopFiveLiked top={this.state.topFiveLiked} />
-      <RecommendationList recommendations={this.state.recommendations} />
+      <RecommendationList recommendations={this.state.recommendations} likePostFunc={this.likePost} />
     </div>)
   }
 }

@@ -19,8 +19,7 @@ var showSchema = mongoose.Schema({
 
 var Show = mongoose.model('Show', showSchema);
 
-var save = function(data, callback) {
-  var parsedData = JSON.parse(data);
+var save = function(parsedData, callback) {
   var recommendations = parsedData.Similar.Results;
   var schemaOutline = {
     name: parsedData.Similar.Info[0].Name,
