@@ -2,7 +2,6 @@ import React from 'react';
 
 const RecommendationListEntry = (props) => (
   <div>
-  {console.log('ENTRIES', props.items)}
     <table>
       <tbody>
         <tr>

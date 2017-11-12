@@ -13,6 +13,7 @@ db.once('open', function() {
 
 var showSchema = mongoose.Schema({
   name: {type: String, index: {unique: true}},
+  likes: Number,
   similar: [{name: String, likes: Number}]
 });
 
@@ -31,7 +32,6 @@ var save = function(data, callback) {
     schemaOutline.similar.push({name: item.Name, likes: 0});
   });
 
-  console.log('SCHEMA OUTLINE: ', schemaOutline);
   var newData = new Show(schemaOutline);
 
   newData.save(function(err, newData) {

@@ -47,7 +47,7 @@ app.post('/search', function (req, res) {
         }
         console.log('API call was successful.');
         db.save(body, function(data) {
-          res.status(200).send(data.similar);  
+          res.status(200).send(data.similar);
         });
       });
     };
@@ -60,10 +60,7 @@ app.get('/fetch', function(req, res) {
     if (err) {
       console.log('Server failed to fetch from database.');
     }
-    items.forEach(item => {
-      output.push(item.name);
-    });
-    res.status(200).send(output);
+    res.status(200).send(items);
   });
 });
 
