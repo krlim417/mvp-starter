@@ -29,7 +29,7 @@ class RecommendationListEntry extends React.Component {
                       </tbody>
                     </table>
                   </td>
-                  <td><iframe src={`https://www.youtube.com/embed/${item.youtubeId}`}></iframe></td>
+                  <td><iframe src={`https://www.youtube.com/embed/${item.youtubeId}`} frameBorder="0" allowFullScreen></iframe></td>
                 </tr>
               );
             })}
