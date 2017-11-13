@@ -62,9 +62,9 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <div className="jumbotron text-center">
-          <h1>Guideify</h1>
-          <p>Providing recommendations for your favorite tv shows.</p> 
+        <div className="jumbotron">
+          <h1 className="logo">Guideify</h1>
+          <p>Providing recommendations for your favorite tv shows</p> 
         </div>
         <div>
           <Search searchFunc={this.search} /><br/>

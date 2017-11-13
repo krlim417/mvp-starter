@@ -27,11 +27,11 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div style={{'marginLeft': 30}}>
+      <div className="search">
         <form>
           <div className="form-group row">
             <div className="col-xs-4">
-              <label htmlFor="search">Retrieve recommendations:</label>
+              <label htmlFor="search" className="search-label">Retrieve recommendations:</label>
               <input type="text" name="search" onChange={this.handleChange} className="form-control" />
               <input type="submit" name="search-submit" onClick={this.handleClick} className="glyphicon glyphicon-search" className="btn btn-default" />
             </div>

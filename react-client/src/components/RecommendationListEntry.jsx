@@ -15,17 +15,17 @@ class RecommendationListEntry extends React.Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th></th>
+              <th>Trailer</th>
             </tr>
             {this.props.items.map(item => {
               return (
                 <tr>
-                  <td className='item-name' key={item.name}>{item.name}</td>
+                  <td className="item-name" key={item.name}>{item.name}</td>
                   <td>
                     <table>
                       <tbody>
-                        <tr>{item.description}</tr>
-                        <tr>Read More: <a href={item.wiki}>{item.wiki}</a></tr>
+                        <tr className="list-desc">{item.description}</tr>
+                        <tr className="wiki">Read More: <a href={item.wiki}>{item.wiki}</a></tr>
                       </tbody>
                     </table>
                   </td>
