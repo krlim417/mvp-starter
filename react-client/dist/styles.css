@@ -1,0 +1,59 @@
+.jumbotron {
+  background: url('water.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  text-align: center;
+  font-weight: 500;
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 10px 10px;
+}
+
+.list-heading {
+  padding-top: 30px;
+}
+
+.top-item-name {
+  font-size: medium;
+  font-weight: 500;
+}
+
+.top-heading {
+  font-size: x-large;
+  font-weight: 500;
+  padding-left: 30px;
+}
+
+.list-heading {
+  padding-top: 30px;
+  font-weight: 500;
+  font-size: x-large;
+  padding-left: 30px;
+}
+
+.search {
+  padding-top: 20px;
+  padding-left: 30px;
+}
+
+.search-label {
+  font-weight: 500;
+  font-size: large;
+}
+
+.item-name {
+  font-weight: 500;
+}
+
+.list-desc {
+  text-align: center;
+}
+.wiki {
+  font-weight: 200;
+  text-align: center;
+}
