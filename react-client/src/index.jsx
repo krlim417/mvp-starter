@@ -46,6 +46,7 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log('POST request was successful.');
+        console.log('CAME BACK', data);
       },
       error: () => {
         console.log('POST request was unsuccessful.');

@@ -41,17 +41,21 @@ app.post('/search', function (req, res) {
   options.q = req.body.valueToFetch;
   imageOptions.q = req.body.valueToFetch;
   db.selectAll(function(err, result) {
-    var output;
-    for (var i = 0; i < result.length; i++) {
-      if (result[i].name.toLowerCase() === options.q.toLowerCase()) {
-        output = result[i].similar;
-        db.updateSearchCount(options.q, function(err, result) {
-          if (err) {
-            console.log('Update times searched did not work');
-          }
-          output.push(result);
-        });
-        break;
+    if (err) {
+      console.log('Failed to select all from database.');
+    } else {
+      var output;
+      for (var i = 0; i < result.length; i++) {
+        if (result[i].lowercaseName === options.q.toLowerCase()) {
+          output = result[i].similar;
+          db.updateSearchCount(result[i].lowercaseName, function(err, result) {
+            if (err) {
+              console.log('Update times searched did not work.');
+            }
+            console.log('Update times searched successfully.');
+          });
+          break;
+        }
       }
     }
     if (output) {

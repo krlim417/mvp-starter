@@ -13,6 +13,7 @@ db.once('open', function() {
 
 var showSchema = mongoose.Schema({
   name: {type: String, index: {unique: true}},
+  lowercaseName: String,
   image: String,
   timesSearched: Number,
   similar: [{
@@ -29,6 +30,7 @@ var save = function(parsedRecommendationData, parsedShowInfoData, callback) {
   var recommendations = parsedRecommendationData.Similar.Results;
   var schemaOutline = {
     name: parsedRecommendationData.Similar.Info[0].Name,
+    lowercaseName: parsedRecommendationData.Similar.Info[0].Name.toLowerCase(),
     image: parsedShowInfoData.show.image.medium,
     timesSearched: 1,
     similar: []
@@ -37,6 +39,7 @@ var save = function(parsedRecommendationData, parsedShowInfoData, callback) {
   recommendations.forEach(item => {
     schemaOutline.similar.push({
       name: item.Name,
+      lowercaseName: item.Name.toLowerCase(),
       description: item.wTeaser,
       wiki: item.wUrl,
       youtubeId: item.yID
@@ -72,12 +75,12 @@ var selectAll = function(callback) {
   });
 };
 
-var updateSearchCount = function(name, callback) {
-  console.log('NAME IN SEARCH', name);
-  Show.findOneAndUpdate(name, {$inc: {timesSearched: 1}}).exec(function(err, data) {
+var updateSearchCount = function(itemName, callback) {
+  Show.findOneAndUpdate({lowercaseName: `${itemName}`}, {$inc: {'timesSearched': 1}}).exec(function(err, data) {
     if (err) {
       console.log('Did not increment times searched.');
     }
+    console.log('Incremented times searched by one.');
     callback(data);
   });
 }
