@@ -60,12 +60,19 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
-      <h1>Guideify</h1>
-      <Search searchFunc={this.search} /><br/>
-      <TopFiveLiked top={this.state.topFiveLiked} />
-      <RecommendationList recommendations={this.state.recommendations} />
-    </div>)
+    return (
+      <div>
+        <div className="jumbotron text-center">
+          <h1>Guideify</h1>
+          <p>Providing recommendations for your favorite tv shows.</p> 
+        </div>
+        <div>
+          <Search searchFunc={this.search} /><br/>
+          <TopFiveLiked top={this.state.topFiveLiked} />
+          <RecommendationList recommendations={this.state.recommendations} />
+        </div>
+      </div>
+    )
   }
 }
 

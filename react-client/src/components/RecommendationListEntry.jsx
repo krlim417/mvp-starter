@@ -9,8 +9,8 @@ class RecommendationListEntry extends React.Component {
 
   render() {
     return (
-      <div>
-        <table>
+      <div className="container-fluid">
+        <table className="table table-bordered">
           <tbody>
             <tr>
               <th>Name</th>

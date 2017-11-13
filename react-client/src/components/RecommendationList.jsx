@@ -3,7 +3,7 @@ import RecommendationListEntry from './RecommendationListEntry.jsx';
 
 const RecommendationList = (props) => (
   <div>
-    <h4>List of recommendations based on your search:</h4>
+    <h5 style={{'marginLeft': 30, 'marginTop': 50}}>List of recommendations based on your search:</h5>
     <RecommendationListEntry items={props.recommendations} />
   </div>
 );
